@@ -32,6 +32,15 @@ services:
         networks:
             redelamplemp:
     #phpmyadmin se se necesita
+    # phpmyadmin:
+    #     image: phpmyadmin/phpmyadmin
+    #     container_name: phpmyadmin
+    #     environment:
+    #         PMA_HOST: some-mysql
+    #         PMA_PORT: 3306
+    #         PMA_ARBITRARY: 1
+    #     ports:
+    #         - 8081:80
     cliente:
         hostname: cliente
         image: brunosct/debian12-cliente-firefox
@@ -48,6 +57,8 @@ services:
             - '8080:80' # Acceso desde localhost en el puerto 8080
         env_file:
             - .env_prestashop
+        depends_on:
+            - basededatos
         networks:
             redelamplemp:
 

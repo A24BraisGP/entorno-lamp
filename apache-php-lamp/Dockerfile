@@ -24,4 +24,4 @@ RUN a2enmod ssl
 RUN update-ca-certificates
 
 
-ENTRYPOINT [ "apachectl","-D","FOREGROUND" ]
+ENTRYPOINT [ "apache2ctl","-D","FOREGROUND" ]
