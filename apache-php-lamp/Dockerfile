@@ -1,32 +1,27 @@
 FROM debian:12
 
-RUN  apt update && apt -y install wget lsb-release apt-transport-https ca-certificates \
-&& apt clean \ 
-&& rm -rf /var/lib/apt/lists/*
 
-RUN wget -O /etc/apt/trusted.gpg.d/php.gpg https://packages.sury.org/php/apt.gpg
+RUN apt update && apt install -y lsb-release apt-transport-https ca-certificates wget gnupg
+RUN wget -q https://packages.sury.org/php/apt.gpg -O- | apt-key add -
+RUN echo "deb https://packages.sury.org/php/ $(lsb_release -sc) main" > /etc/apt/sources.list.d/php.list
+RUN apt update && apt install -y php8.1
+# FIN DE CHATGPT
 
-RUN echo "deb https://packages.sury.org/php/ $(lsb_release -sc) main" | tee /etc/apt/sources.list.d/php.list
+RUN apt install -y apache2 
 
-RUN apt update && apt install -y apache2 php8.3 php8.3-mysql php8.3-xml php8.3-gd php8.3-curl php8.3-mbstring git zip libnss3-tools xdg-utils\
- && apt upgrade -y\
-    && apt clean \ 
-&& rm -rf /var/lib/apt/lists/*
 
-RUN php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');"
-
-RUN php -r "if (hash_file('sha384', 'composer-setup.php') === 'dac665fdc30fdd8ec78b38b9800061b4150413ff2e3b6f88543c636f7cd84f6db9189d43a81e5503cda447da73c7e5b6') { echo 'Installer verified'.PHP_EOL; } else { echo 'Installer corrupt'.PHP_EOL; unlink('composer-setup.php'); exit(1); }"
-
-RUN php composer-setup.php
-
-RUN php -r "unlink('composer-setup.php');"
-
-RUN mv composer.phar /usr/local/bin/composer
+# EXTENSIONES DE PHP
+RUN apt install -y php8.1-curl php8.1-dom php8.1-fileinfo php8.1-gd php8.1-iconv php8.1-intl php8.1-mbstring php8.1-pdo php8.1-mysql php8.1-simplexml php8.1-zip
 
 EXPOSE 80
 EXPOSE 443
 
-RUN a2enmod ssl
-RUN a2enmod rewrite
 
-CMD ["apachectl","-D","FOREGROUND"]
+# MODULOS DE APACHE
+# RUN a2enmod rewrite
+RUN a2enmod ssl
+
+RUN update-ca-certificates
+
+
+ENTRYPOINT [ "apachectl","-D","FOREGROUND" ]
