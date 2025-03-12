@@ -10,7 +10,8 @@ services:
             - ./certificados:/certs
             - ./apache-php-lamp/vhost/vhost.apache.conf:/etc/apache2/sites-enabled/vhost.apache.conf
             - ./apache-php-lamp/php.ini:/etc/php/8.1/apache2/php.ini
-
+        env_file:
+            - .evn_prod
 secrets:
     db_root_password:
         file: ./db_root_password.txt
