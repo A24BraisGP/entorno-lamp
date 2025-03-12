@@ -20,7 +20,7 @@ EXPOSE 443
 # MODULOS DE APACHE
 # RUN a2enmod rewrite
 RUN a2enmod ssl
-
+RUN a2enmod rewrite
 RUN update-ca-certificates
 
 

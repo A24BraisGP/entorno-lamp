@@ -1,0 +1,65 @@
+services:
+    apache:
+        build: apache-php-lamp
+        hostname: web-apache
+        ports:
+            - '80:80'
+            - '443:443'
+        volumes:
+            - ./prestashop_8.2.1:/app
+            - ./certificados:/certs
+            - ./apache-php-lamp/vhost/vhost.apache.conf:/etc/apache2/sites-enabled/vhost.apache.conf
+            - ./apache-php-lamp/php.ini:/etc/php/8.1/apache2/php.ini
+        networks:
+            redelamplemp:
+                aliases:
+                    - braisgp.tech
+                    - www.braisgp.tech
+    basededatos:
+        image: mysql:latest
+        ports:
+            - 3306:3306
+        env_file:
+            - .env_dev
+        environment:
+            MYSQL_ROOT_PASSWORD_FILE: /run/secrets/db_root_password
+            MYSQL_PASSWORD_FILE: /run/secrets/db_braisgp_password
+        secrets:
+            - db_root_password
+            - db_braisgp_password
+        volumes:
+            - ./bd/backup:/docker-entrypoint-initdb.d
+            - ./bd/backup:/backup
+            - datos:/var/lib/mysql
+        networks:
+            redelamplemp:
+    #phpmyadmin se se necesita
+    # phpmyadmin:
+    #     image: phpmyadmin/phpmyadmin
+    #     container_name: phpmyadmin
+    #     environment:
+    #         PMA_HOST: some-mysql
+    #         PMA_PORT: 3306
+    #         PMA_ARBITRARY: 1
+    #     ports:
+    #         - 8081:80
+    cliente:
+        image: brunosct/debian12-cliente-firefox
+        networks:
+            - redelamplemp
+        environment:
+            - DISPLAY=${DISPLAY}
+        volumes:
+            - /tmp/.X11-unix:/tmp/.X11-unix:ro
+            - ${XAUTHORITY}:${XAUTHORITY}
+        privileged: true
+
+volumes:
+    datos:
+networks:
+    redelamplemp:
+secrets:
+    db_root_password:
+        file: ./db_root_password.txt
+    db_braisgp_password:
+        file: ./db_braisgp_password.txt
