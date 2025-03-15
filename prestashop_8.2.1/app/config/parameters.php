@@ -1,17 +1,13 @@
 <?php 
-define('_DB_NAME_', getenv('DB_NAME') ?: 'db');
-define('_DB_USER_', getenv('PS_USER') ?: 'root');
-define('_DB_PASSWD_', getenv('PS_PASS_FILE') ?: 'braisgp123.');
-
 
 return array (
   'parameters' => 
   array (
-    'database_host' => 'basededatos',
-    'database_port' => '',
-    'database_name' => 'db',
-    'database_user' => 'root',
-    'database_password' => _DB_PASSWD_,
+    'database_host' => getenv('MYSQL_HOST'),
+    'database_port' => getenv('MYSQL_PORT'),
+    'database_name' => getenv('MYSQL_DATABASE'),
+    'database_user' =>  getenv('MYSQL_USER'),
+    'database_password' => getenv('MYSQL_PASSWORD'),
     'database_prefix' => 'ps_',
     'database_engine' => 'InnoDB',
     'mailer_transport' => 'smtp',

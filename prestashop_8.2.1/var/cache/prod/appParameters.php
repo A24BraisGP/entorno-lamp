@@ -2,7 +2,7 @@
   'parameters' => 
   array (
     'database_host' => 'basededatos',
-    'database_port' => '',
+    'database_port' => '3306',
     'database_name' => 'db',
     'database_user' => 'root',
     'database_password' => 'braisgp123.',

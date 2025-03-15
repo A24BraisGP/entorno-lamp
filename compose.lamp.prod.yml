@@ -11,7 +11,22 @@ services:
             - ./apache-php-lamp/vhost/vhost.apache.conf:/etc/apache2/sites-enabled/vhost.apache.conf
             - ./apache-php-lamp/php.ini:/etc/php/8.1/apache2/php.ini
         env_file:
-            - .evn_prod
+            - .env_prod
+        networks:
+            redelamplemp:
+    cliente:
+        image: brunosct/debian12-cliente-firefox
+        networks:
+            - redelamplemp
+        environment:
+            - DISPLAY=${DISPLAY}
+        volumes:
+            - /tmp/.X11-unix:/tmp/.X11-unix:ro
+            - ${XAUTHORITY}:${XAUTHORITY}
+        privileged: true
+
+networks:
+    redelamplemp:
 secrets:
     db_root_password:
         file: ./db_root_password.txt

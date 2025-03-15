@@ -31,9 +31,6 @@ services:
             - 3306:3306
         env_file:
             - .env_dev
-        environment:
-            MYSQL_ROOT_PASSWORD_FILE: /run/secrets/db_root_password
-            MYSQL_PASSWORD_FILE: /run/secrets/db_braisgp_password
         secrets:
             - db_root_password
             - db_braisgp_password

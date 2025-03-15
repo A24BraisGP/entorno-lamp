@@ -1,1 +1,1 @@
-docker exec basededatos bash -c "mysqldump -u root -p'braisgp123.' bd" > backup/backup.sql
+mysqldump -u root -p -h $MYSQL_HOST $MYSQL_DATABASE > bd/backup/backup.sql
