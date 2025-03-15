@@ -5,6 +5,8 @@ services:
         ports:
             - '80:80'
             - '443:443'
+        env_file:
+            - .env_dev
         volumes:
             - ./prestashop_8.2.1:/app
             - ./certificados:/certs
@@ -15,12 +17,13 @@ services:
                 aliases:
                     - braisgp.tech
                     - www.braisgp.tech
-        env_file:
-            - .env_dev
     phpserver:
         build: php-lemp
+        env_file:
+            - .env_dev
         volumes:
             - ./prestashop_8.2.1:/app
+            - ./certificados:/certs
             - ./apache-php-lamp/php.ini:/etc/php/8.1/fpm/php.ini
             - ./nginx-lemp/www.conf:/etc/php/8.1/fpm/pool.d/www.conf
         networks:
@@ -36,7 +39,7 @@ services:
             - db_braisgp_password
         volumes:
             - ./bd/backup:/docker-entrypoint-initdb.d
-            - ./bd/backup:/backup
+            - ./bd:/bd
             - datos:/var/lib/mysql
         networks:
             redelamplemp:
