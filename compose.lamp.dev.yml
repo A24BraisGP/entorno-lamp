@@ -17,6 +17,7 @@ services:
                     - www.braisgp.tech
     basededatos:
         image: mysql:latest
+        hostname: basededatos
         ports:
             - 3306:3306
         env_file:
@@ -29,7 +30,7 @@ services:
             - db_braisgp_password
         volumes:
             - ./bd/backup:/docker-entrypoint-initdb.d
-            - ./bd/backup:/backup
+            - ./bd:/bd
             - datos:/var/lib/mysql
         networks:
             redelamplemp:

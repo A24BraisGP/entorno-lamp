@@ -1,5 +1,7 @@
-.env
-
+.env_dev
+.env_prod
+db_braisgp_password.txt
+db_root_password.txt
 # Created by https://www.toptal.com/developers/gitignore/api/prestashop
 # Edit at https://www.toptal.com/developers/gitignore?templates=prestashop
 

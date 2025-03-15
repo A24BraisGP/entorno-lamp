@@ -1,3 +1,3 @@
 ##### restore.sh
 #!/bin/bash
-docker compose exec basededatos bash -c "mysql -u user -p minhabd < /backup/backup.sql"
+docker compose exec compose.lamp.dev.yml bash -c "mysql -u root -pbraisgp123. bd" < /backup/backup.sql

@@ -21,8 +21,8 @@ services:
         build: php-lemp
         volumes:
             - ./prestashop_8.2.1:/app
-              - ./apache-php-lamp/php.ini:/etc/php/8.1/apache2/php.ini
-            - ./nginx-lemp/www.conf:/etc/php/{version}/fpm/pool.d/www.conf
+            - ./apache-php-lamp/php.ini:/etc/php/8.1/fpm/php.ini
+            - ./nginx-lemp/www.conf:/etc/php/8.1/fpm/pool.d/www.conf
         networks:
             redelamplemp:
     basededatos:
