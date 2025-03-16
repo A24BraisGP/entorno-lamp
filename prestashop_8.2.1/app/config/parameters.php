@@ -4,7 +4,7 @@ return array (
   'parameters' => 
   array (
     'database_host' => getenv('MYSQL_HOST'),
-    'database_port' => getenv('MYSQL_PORT'),
+    'database_port' => getenv('MYSQL_PORT') ,
     'database_name' => getenv('MYSQL_DATABASE'),
     'database_user' =>  getenv('MYSQL_USER'),
     'database_password' => getenv('MYSQL_PASSWORD'),

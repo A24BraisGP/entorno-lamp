@@ -5,31 +5,46 @@ services:
         ports:
             - '80:80'
             - '443:443'
+        env_file:
+            - .env_prod
         volumes:
             - ./prestashop_8.2.1:/app
             - ./certificados:/certs
             - ./nginx-lemp/vhost.lemp.conf:/etc/nginx/conf.d/vhost.lemp.conf
-            - ./apache-php-lamp/php.ini:/etc/php/8.1/apache2/php.ini
-            - ./nginx-lemp/www.conf:/etc/php/{version}/fpm/pool.d/www.conf
+
         networks:
             redelamplemp:
                 aliases:
                     - braisgp.tech
                     - www.braisgp.tech
-        env_file:
-            - .evn_prod
     phpserver:
         build: php-lemp
-        volumes:
-            - ./prestashop_8.2.1:/app
-            - ./apache-php-lamp/php.ini:/etc/php/8.1/fpm/php.ini
-            - ./nginx-lemp/www.conf:/etc/php/8.1/fpm/pool.d/www.conf
         env_file:
             - .env_prod
+        volumes:
+            - ./prestashop_8.2.1:/app
+            - ./certificados:/certs
+            - ./apache-php-lamp/php.ini:/etc/php/8.1/fpm/php.ini
+            - ./nginx-lemp/www.conf:/etc/php/8.1/fpm/pool.d/www.conf
         networks:
             redelamplemp:
+    cliente:
+        image: brunosct/debian12-cliente-firefox
+        networks:
+            - redelamplemp
+        environment:
+            - DISPLAY=${DISPLAY}
+        volumes:
+            - /tmp/.X11-unix:/tmp/.X11-unix:ro
+            - ${XAUTHORITY}:${XAUTHORITY}
+        privileged: true
 
 volumes:
     datos:
 networks:
     redelamplemp:
+secrets:
+    db_root_password:
+        file: ./db_root_password.txt
+    db_braisgp_password:
+        file: ./db_braisgp_password.txt

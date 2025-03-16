@@ -1,11 +1,11 @@
 <?php return array (
   'parameters' => 
   array (
-    'database_host' => false,
-    'database_port' => false,
-    'database_name' => false,
-    'database_user' => false,
-    'database_password' => false,
+    'database_host' => 'basededatos',
+    'database_port' => '3306',
+    'database_name' => 'db',
+    'database_user' => 'root',
+    'database_password' => 'braisgp123.',
     'database_prefix' => 'ps_',
     'database_engine' => 'InnoDB',
     'mailer_transport' => 'smtp',

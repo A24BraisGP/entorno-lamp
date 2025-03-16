@@ -30,6 +30,7 @@ services:
             redelamplemp:
     basededatos:
         image: mysql:latest
+        hostname: basededatos
         ports:
             - 3306:3306
         env_file:
